@@ -70,4 +70,22 @@ export default class Helpers {
             seconds: matches[16] ? parseFloat(matches[16]) : 0
         };
     }
+
+    static removeEmptyObjects(obj: any): any {
+        if(_.isArray(obj)) {
+          return _(obj)
+            .filter(_.isObject)
+          .map(Helpers.removeEmptyObjects)
+          .reject(_.isEmpty)
+          .concat(_.reject(obj, _.isObject))
+          .value();
+        }
+
+      return _(obj)
+        .pickBy(_.isObject)
+        .mapValues(Helpers.removeEmptyObjects)
+        .omitBy(_.isEmpty)
+        .assign(_.omitBy(obj, _.isObject))
+        .value();
+    }
 }

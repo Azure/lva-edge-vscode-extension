@@ -28,6 +28,7 @@ import {
     OutputSelectorValueType,
     ValidationError
 } from "../Types/GraphTypes";
+import Helpers from "../Utils/Helpers";
 import LocalizerHelpers from "../Utils/LocalizerHelpers";
 import NodeHelpers from "../Utils/NodeHelpers";
 import SharedNodeHelpers from "../Utils/SharedNodeHelpers";
@@ -194,7 +195,7 @@ export class GraphData {
             (topology as any)["@apiVersion"] = this.graphInformation.apiVersion;
         }
 
-        return topology;
+        return Helpers.removeEmptyObjects(topology);
     }
 
     public getParameters(): MediaGraphParameterDeclaration[] {
